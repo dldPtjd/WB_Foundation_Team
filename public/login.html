@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="icon" href="img/wb_fabicon.ico">
+    <title>Wanbang Foundation Team</title>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo"><img src="source/WB Foundation Team Logo.png" width="250px"></a>
+        <nav>
+            <a href="about.html">소개</a>
+            <a href="netdisk.html">자료실</a>
+            <a href="blog_home.html">소식</a>
+            <button class="login_button" type="button" id="login_button" onclick="location.href='login.html'">로그인</a>
+            <button class="logout_button" type="button" id="logout_button" onclick="location.href='login.html'">로그아웃</a>
+        </nav>
+    </header>
+        
+        <div id="fade">
+        <section class="wrapper">
+            <div class="form-box login">
+                <h2>관리자 로그인</h2>
+                <form action="#">
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+                        <input type="id" id="signInEmail" required>
+                        <label>이메일</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+                        <input type="password" id="signInPassword" required>
+                        <label>비밀번호</label>
+                    </div>
+                    <button type="submit" class="btn" id="signInButton">Login</button>
+                    <h1 class="information"> 본 사이트는 일반 회원 로그인을 지원하지 않습니다.</h1>
+                    <div class="login-register">
+                        <p>관리자 키가 있으신가요? <a href="#"class="register-link">관리자 등록하기</a>
+                    </div>
+                </form>
+            </div>
+
+            <div class="form-box register">
+                <h2>관리자 등록</h2>
+                <form action="#">
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+                        <input type="id" id="signUpEmail" required />
+                        <label>이메일</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
+                        <input type="password" id="signUpPassword" required />
+                        <label>비밀번호</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="key-outline"></ion-icon></span>
+                        <input type="password" id="singUpadminKey" required>
+                        <label>관리자 키</label>
+                    </div>
+                    <button type="submit" class="btn" id="signUpButton">등록</button>
+                    <h1 class="information">관리자 키가 있어야만 등록이 가능합니다.</h1>
+                    <div class="login-register">
+                        <p>이미 등록하셨나요? <a href="#"class="login-link">로그인하기</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    </div>
+
+    <script>
+        const wrapper = document.querySelector('.wrapper');
+        const loginLink = document.querySelector('.login-link');
+        const registerLink = document.querySelector('.register-link');
+
+        registerLink.addEventListener('click', ()=> {
+            wrapper.classList.add('active');
+        });
+
+        loginLink.addEventListener('click', () => {
+            wrapper.classList.remove('active');
+        });
+    </script>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyBPMlJ16AKV9_ZNDWY8zwfEKyHEaa2Bj2U",
+            authDomain: "wft-official-website.firebaseapp.com",
+            projectId: "wft-official-website",
+            storageBucket: "wft-official-website.firebasestorage.app",
+            messagingSenderId: "1064235994661",
+            appId: "1:1064235994661:web:662237b6d6c5dc4db079cc",
+            measurementId: "G-BNEN7MDELT"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, setPersistence, browserSessionPersistence, onAuthStateChanged, signOut} from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
+        const auth = getAuth();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginButton = document.getElementById('login_button');
+            const logoutButton = document.getElementById('logout_button');
+
+            // Check if user info exists in sessionStorage
+            const storedUser = sessionStorage.getItem('user');
+            if (storedUser) {
+                // If user info exists in sessionStorage, show logout button
+                loginButton.style.display = 'none';
+                logoutButton.style.display = 'block';
+            } else {
+                // Otherwise, show login button
+                loginButton.style.display = 'block';
+                logoutButton.style.display = 'none';
+            }
+        })
+        document.getElementById('signUpButton').addEventListener('click', (event) => {
+            event.preventDefault()
+            const signUpEmail = document.getElementById('signUpEmail').value
+            const signUpPassword = document.getElementById('signUpPassword').value
+            const singUpadminKey = document.getElementById('singUpadminKey').value
+
+            createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword)
+                .then((userCredential) => {
+                    if (singUpadminKey == "wft_goodtgodt"){
+                        alert ("등록에 성공하였습니다.")
+                        console.log(userCredential)
+                        // Signed in
+                        const user = userCredential.user;
+                        // ...
+                    }
+                    else{
+                        alert ("Admin Key가 잘못되었습니다.")
+                        console.log('error')
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+
+                    }
+                })
+                .catch((error) => {
+                    alert ("에러가 발생하였습니다. 다시 시도해주세요.")
+                    console.log('error')
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    // ..
+                });
+
+        })
+
+        document.getElementById('signInButton').addEventListener('click', (event) => {
+            event.preventDefault()
+            const signInEmail = document.getElementById('signInEmail').value
+            const signInPassword = document.getElementById('signInPassword').value
+            signInWithEmailAndPassword(auth, signInEmail, signInPassword)
+                .then((userCredential) => {
+                    alert ("로그인에 성공하였습니다.")
+                    sessionStorage.setItem('user', JSON.stringify(userCredential.user));
+                    // Signed in
+                    console.log(userCredential)
+                    const user = userCredential.user;
+                    location.href="index.html";
+                    // ...
+                })
+                .catch((error) => {
+                    alert ("이메일 혹은 패스워드가 잘못되었습니다.")
+                    console.log('로그인 실패')
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                })
+        })
+
+        document.getElementById('logout_button').addEventListener('click', (event) => {
+            signOut(auth)
+                    .then(() => {
+                        alert ("로그아웃 되었습니다.")
+                        sessionStorage.removeItem('user');
+                        console.log("Logged out");
+                        location.reload(true);
+                    })
+                    .catch(error => {
+                        alert("Error: " + error.message);
+                    });
+        })
+
+    </script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js">
+        const lenis = new Lenis({
+            // 추가된 부분
+            duration: 2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            });
+
+            function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+    </script> 
+
+<body>
+    
+</body>
+</html>
